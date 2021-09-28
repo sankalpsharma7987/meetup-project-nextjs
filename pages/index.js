@@ -1,5 +1,4 @@
 import MeetupList from "../components/meetups/MeetupList";
-import { useState, useEffect } from "react";
 
 const DUMMY_MEETUPS = [
   {
@@ -20,18 +19,29 @@ const DUMMY_MEETUPS = [
   },
 ];
 
-const HomePage = () => {
-  const [loadedData, setLoadedData] = useState([]);
+const HomePage = (props) => {
+  //   const [loadedData, setLoadedData] = useState([]);
 
-  useEffect(() => {
-    //Simulate experience of fetching and loading data in loadedData state
-    // Assume DUMMY_MEETUPS data was fetched from an API
-    /*This implementation will render an empty meetup list in the page source code as the page, when pre-rendered by NextJS, will not have load data in loadedData state
-      As this page is pre-rendered and send to the client, the browser will then run the useEffect after the page is rendered for the first time in order to  load data. 
-      Thus the meetups data is not pre-rendered and send to the client by NextJS will this implementation*/
-    setLoadedData(DUMMY_MEETUPS);
-  }, []);
-  return <MeetupList meetups={loadedData} />;
+  //   useEffect(() => {
+  //     //Simulate experience of fetching and loading data in loadedData state
+  //     // Assume DUMMY_MEETUPS data was fetched from an API
+  //     /*This implementation will render an empty meetup list in the page source code as the page, when pre-rendered by NextJS, will not have load data in loadedData state
+  //       As this page is pre-rendered and send to the client, the browser will then run the useEffect after the page is rendered for the first time in order to  load data.
+  //       Thus the meetups data is not pre-rendered and send to the client by NextJS will this implementation*/
+  //     setLoadedData(DUMMY_MEETUPS);
+  //   }, []);
+
+  /*This implementation will result pre-rendering of meetups data, by NextJS on the server side, before sending it to the client browser.
+    Thus the meetups list will not be empty.
+    */
+  return <MeetupList meetups={props.meetups} />;
 };
 
+export async function getStaticProps() {
+  return {
+    props: {
+      meetups: DUMMY_MEETUPS,
+    },
+  };
+}
 export default HomePage;
