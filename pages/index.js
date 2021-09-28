@@ -21,6 +21,13 @@ const DUMMY_MEETUPS = [
 ];
 
 const HomePage = () => {
+  const [loadedData, setLoadedData] = useState([]);
+
+  useEffect(() => {
+    //Simulate experience of fetching and loading data in loadedData state
+    // Assume DUMMY_MEETUPS data was fetched from an API
+    setLoadedData(DUMMY_MEETUPS);
+  }, []);
   return <MeetupList meetups={loadedData} />;
 };
 
