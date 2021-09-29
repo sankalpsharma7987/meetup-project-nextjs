@@ -31,7 +31,7 @@ const HomePage = (props) => {
   //     setLoadedData(DUMMY_MEETUPS);
   //   }, []);
 
-  /*This implementation will result pre-rendering of meetups data, by NextJS on the server side, before sending it to the client browser.
+  /*This implementation will result pre-rendering of meetups data, by NextJS on the server side during the build process, before sending it to the client browser.
     Thus the meetups list will not be empty.
     */
   return <MeetupList meetups={props.meetups} />;
@@ -42,6 +42,8 @@ export async function getStaticProps() {
     props: {
       meetups: DUMMY_MEETUPS,
     },
+    // revalidate helps in Incremental Static Generation. Number of seconds after which NextJS will pre-render this page by fetching new values from the API in order to return any subsequent page request with updated data.
+    revalidate: 600,
   };
 }
 export default HomePage;
